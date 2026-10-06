@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我是罗洋 · 自我介绍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060b;
+  --ink:#f4efe8;
+  --mute:#8d8798;
+  --gold:#f5c97b;
+  --rose:#ff5c7a;
+  --cyan:#7be0ff;
+  --line:rgba(255,255,255,.09);
+  --serif:"Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  --pixel:"Press Start 2P",var(--mono);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(--sans);color:var(--ink)}
+
+/* ========== 舞台 ========== */
+#stage{
+  position:absolute;left:50%;top:50%;
+  width:1920px;height:1080px;overflow:hidden;
+  transform-origin:center;
+  --k:0;
+  background:
+    radial-gradient(1200px 700px at 15% 10%,rgba(255,92,122,.10),transparent 60%),
+    radial-gradient(1000px 700px at 90% 90%,rgba(245,201,123,.10),transparent 60%),
+    var(--bg);
+}
+#bg{position:absolute;inset:0;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;z-index:0;animation:orb 18s ease-in-out infinite alternate}
+.orb.a{width:620px;height:620px;background:#ff5c7a;left:-160px;top:-180px}
+.orb.b{width:560px;height:560px;background:#f5c97b;right:-160px;bottom:-200px;animation-delay:-6s}
+.orb.c{width:420px;height:420px;background:#6d5cff;left:55%;top:40%;opacity:.18;animation-delay:-11s}
+@keyframes orb{to{transform:translate(120px,80px) scale(1.15)}}
+.grain{position:absolute;inset:-50%;z-index:50;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(1%,3%)}}
+.vignette{position:absolute;inset:0;z-index:49;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.7) 100%);
+  opacity:calc(1 - var(--k) * .3)}
+#flash{position:absolute;inset:0;z-index:45;pointer-events:none;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(circle at 50% 50%,#fff 0%,rgba(255,190,205,.55) 35%,transparent 75%)}
+.frame-mark{position:absolute;z-index:48;font-family:var(--mono);font-size:15px;letter-spacing:.3em;color:rgba(255,255,255,.35)}
+.frame-mark.tl{left:56px;top:44px}
+.frame-mark.tr{right:56px;top:44px}
+.frame-mark.bl{left:56px;bottom:44px}
+.frame-mark.br{right:56px;bottom:44px}
+.frame-mark .rec{color:var(--rose);animation:blink 1.2s steps(2) infinite}
+#beats .on{color:var(--gold);text-shadow:0 0 12px var(--gold)}
+@keyframes blink{50%{opacity:0}}
+#stage.paused *,#stage.paused *::before,#stage.paused *::after{animation-play-state:paused!important}
+
+/* ========== 场景 & 镜头世界 ========== */
+.scene{position:absolute;inset:0;z-index:5;opacity:0;visibility:hidden}
+.world{
+  position:absolute;left:0;top:0;width:1920px;height:1080px;
+  padding:120px 150px;display:flex;flex-direction:column;
+  transform-origin:0 0;
+}
+.it{opacity:0}
+
+/* ========== 通用组件 ========== */
+.chap{display:flex;align-items:center;gap:30px;margin-bottom:60px}
+.chap .core{display:inline-flex;align-items:center;gap:30px}
+.chap .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.chap .no{font-family:var(--pixel);font-size:26px;color:var(--rose);padding:14px 16px;border:2px solid rgba(255,92,122,.5);border-radius:6px;
+  text-shadow:0 0 18px rgba(255,92,122,.6);box-shadow:0 0 calc(var(--k) * 36px) rgba(255,92,122,.75)}
+.chap .ttl{font-family:var(--serif);font-size:76px;font-weight:900;letter-spacing:.04em}
+.chap .en{font-family:var(--mono);font-size:18px;letter-spacing:.45em;color:var(--mute)}
+.card{
+  background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015));
+  border:1px solid var(--line);border-radius:30px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;font-size:20px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#d9d3e2}
+.gold-text{background:linear-gradient(110deg,#f5c97b 15%,#fff4d8 40%,#ff9db0 60%,#f5c97b 85%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 4s linear infinite}
+@keyframes shimmer{to{background-position:-220% 0}}
+.strike{position:relative;display:inline-block}
+.strike::after{content:"";position:absolute;left:-4px;top:54%;height:5px;border-radius:4px;background:var(--rose);box-shadow:0 0 14px var(--rose);
+  width:calc(var(--p,0) * (100% + 8px))}
+
+/* ========== 01 开场 ========== */
+.s-intro{align-items:center;justify-content:center;text-align:center}
+.ring-wrap{position:absolute;left:50%;top:50%;width:980px;height:980px;margin:-490px 0 0 -490px}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(245,201,123,.25);animation:spin 40s linear infinite}
+.ring::before{content:"";position:absolute;inset:90px;border-radius:50%;border:1px solid rgba(255,92,122,.18)}
+.ring::after{content:"";position:absolute;inset:200px;border-radius:50%;background:conic-gradient(from 0deg,transparent,rgba(255,92,122,.22),transparent 40%,rgba(245,201,123,.2),transparent 80%);filter:blur(30px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.eyebrow{font-family:var(--mono);letter-spacing:.8em;font-size:20px;color:var(--mute);margin-bottom:30px;position:relative}
+.hero{font-family:var(--serif);font-size:230px;font-weight:900;margin:0;line-height:1.05;position:relative;letter-spacing:.06em}
+.hero span{display:inline-block}
+.slogan{font-size:52px;font-weight:300;margin:34px 0 0;position:relative;letter-spacing:.08em}
+.slogan em{font-style:normal;font-weight:700;color:var(--rose);display:inline-block;animation:wiggle 1.6s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:none}20%{transform:rotate(-4deg) scale(1.08)}40%{transform:rotate(4deg) scale(1.08)}60%{transform:none}}
+.rose{display:inline-block;animation:bounce 1.09s ease-in-out infinite}
+.rose+.rose{animation-delay:.27s}
+@keyframes bounce{50%{transform:translateY(-14px) rotate(10deg)}}
+.nick{margin-top:56px;display:inline-flex;align-items:center;gap:16px;padding:18px 34px;border-radius:999px;font-size:28px;border:1px solid rgba(245,201,123,.35);background:rgba(245,201,123,.06);position:relative}
+.nick .dot{width:12px;height:12px;border-radius:50%;background:#4ade80;box-shadow:0 0 14px #4ade80}
+
+/* ========== 02 我是谁 ========== */
+.profile-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:80px;flex:1;align-items:center}
+.code-win{border-radius:24px;overflow:hidden;background:rgba(10,9,16,.88);border:1px solid var(--line);box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.win-bar{display:flex;align-items:center;gap:10px;padding:18px 24px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--line)}
+.win-bar i{width:14px;height:14px;border-radius:50%;background:#ff5f57}
+.win-bar i:nth-child(2){background:#febc2e}
+.win-bar i:nth-child(3){background:#28c840}
+.win-bar span{margin-left:16px;font-family:var(--mono);font-size:17px;color:var(--mute)}
+.code{margin:0;padding:34px 40px;min-height:520px;font-family:var(--mono);font-size:27px;line-height:1.75;white-space:pre}
+.t-kw{color:#c792ea}
+.t-fn{color:var(--cyan)}
+.t-k{color:#f78c6c}
+.t-s{color:#c3e88d}
+.t-p{color:#cfd3dc}
+.t-c{color:#7f7a8f;font-style:italic}
+.caret{display:inline-block;width:14px;height:30px;background:var(--cyan);vertical-align:-5px;animation:blink 1s steps(2) infinite;margin-left:2px}
+.path{display:flex;flex-direction:column}
+.node{display:flex;align-items:center;gap:28px;padding:26px 32px;position:relative}
+.node .ic{width:84px;height:84px;flex:none;border-radius:22px;display:grid;place-items:center;font-size:40px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.02));border:1px solid var(--line)}
+.node .ic.mono{font-family:var(--mono);font-size:30px;color:var(--cyan)}
+.node b{display:block;font-size:36px;font-weight:700;margin-bottom:6px}
+.node span{font-size:23px;color:var(--mute)}
+.node.now{border:1px solid rgba(255,92,122,.45);border-radius:26px;background:rgba(255,92,122,.06)}
+.node.now::before{content:"";position:absolute;right:30px;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--rose);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,92,122,.6)}100%{box-shadow:0 0 0 22px rgba(255,92,122,0)}}
+.link{height:34px;width:2px;margin-left:73px;background:linear-gradient(var(--gold),var(--rose));opacity:.6}
+
+/* ========== 03 像素视频 ========== */
+.pix-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;flex:1;align-items:center}
+.steps{display:flex;flex-direction:column;gap:30px}
+.step{display:flex;gap:30px;padding:32px 36px}
+.step .n{font-family:var(--pixel);font-size:30px;color:var(--gold);line-height:1.4}
+.step h3{margin:0 0 12px;font-size:36px}
+.step p{margin:0;font-size:23px;color:#b9b2c6;line-height:1.6}
+.step .tags{display:flex;flex-wrap:wrap;gap:10px}
+.step.hl{border-color:rgba(255,92,122,.45);background:linear-gradient(160deg,rgba(255,92,122,.12),rgba(255,255,255,.01))}
+.crt{padding:30px}
+.screen{position:relative;border-radius:18px;overflow:hidden;height:420px;display:grid;place-items:center;
+  background:linear-gradient(#1b1640 0 62%,#2a1f3d 62% 64%,#15301f 64%)}
+.screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(transparent 0 3px,rgba(0,0,0,.28) 3px 4px);pointer-events:none}
+.screen .moon{position:absolute;right:80px;top:50px;width:56px;height:56px;background:#ffe9a8;box-shadow:0 0 40px #ffe9a8}
+.screen .star{position:absolute;width:6px;height:6px;background:#fff;animation:blink 1.09s steps(2) infinite}
+.screen .hud{position:absolute;left:24px;top:22px;font-family:var(--pixel);font-size:14px;color:#ffe9a8;line-height:2}
+#sprite{position:relative;z-index:2;margin-top:40px;image-rendering:pixelated}
+.sheet{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
+.sheet>div{border:1px dashed rgba(255,255,255,.18);border-radius:14px;padding:10px 0 12px;text-align:center;background:rgba(0,0,0,.25)}
+.sheet canvas{display:block;margin:0 auto;image-rendering:pixelated}
+.sheet span{font-size:18px;color:var(--mute);font-family:var(--mono)}
+
+/* ========== 04 名画复刻 ========== */
+.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:34px;margin-bottom:48px}
+.pf{position:relative;height:310px;padding:12px;border-radius:6px;
+  background:linear-gradient(135deg,#8a6a2f,#f5d48f 30%,#7a5a22 55%,#e7c27a 80%,#6b4c1c);
+  box-shadow:0 26px 60px rgba(0,0,0,.6),inset 0 0 0 2px rgba(0,0,0,.3)}
+.pf .art{width:100%;height:100%;box-shadow:inset 0 0 30px rgba(0,0,0,.6)}
+.pf .cap{position:absolute;left:0;right:0;bottom:-40px;text-align:center;font-family:var(--mono);font-size:17px;color:var(--mute);letter-spacing:.2em}
+.pf.best{box-shadow:0 0 0 3px var(--rose),0 0 60px rgba(255,92,122,.5),0 26px 60px rgba(0,0,0,.6)}
+.pf .badge{position:absolute;top:-22px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:8px 18px;border-radius:999px;background:var(--rose);font-weight:700;font-size:20px;box-shadow:0 10px 30px rgba(255,92,122,.5)}
+.art.p1{background:
+  radial-gradient(circle at 74% 22%,#ffe680 0 7%,rgba(255,230,128,.25) 9%,transparent 15%),
+  radial-gradient(circle at 25% 30%,rgba(249,214,92,.6) 0 4%,transparent 9%),
+  linear-gradient(100deg,transparent 0 12%,#0d1a12 12% 22%,transparent 22%),
+  repeating-radial-gradient(circle at 48% 38%,#1d3b8f 0 9px,#3466d1 9px 16px,#132a66 16px 23px)}
+.art.p2{background:
+  radial-gradient(circle at 57% 64%,#fff 0 2.4%,#9fb4c8 3%,transparent 3.6%),
+  radial-gradient(ellipse 22% 26% at 52% 52%,#efcd9f 0 60%,transparent 62%),
+  radial-gradient(ellipse 26% 18% at 48% 30%,#2f5aa8 0 70%,transparent 72%),
+  radial-gradient(ellipse 18% 30% at 62% 34%,#e9c04a 0 60%,transparent 62%),
+  radial-gradient(ellipse 30% 22% at 50% 84%,#c79a38 0 60%,transparent 62%),#0b0d10}
+.art.p3{background:
+  radial-gradient(ellipse 15% 19% at 50% 32%,#dcab6c 0 70%,transparent 72%),
+  radial-gradient(ellipse 30% 26% at 50% 24%,#2a1c10 0 60%,transparent 62%),
+  radial-gradient(ellipse 40% 34% at 50% 92%,#3a2a18 0 70%,transparent 72%),
+  linear-gradient(180deg,#8a9161,#4a4a2a)}
+.art.p4{background:
+  linear-gradient(180deg,#efe2c4 0 34%,transparent 34%),
+  radial-gradient(circle at 76% 34%,#efe2c4 0 10%,transparent 10.5%),
+  repeating-radial-gradient(circle at 28% 115%,#f4f0e6 0 6px,#1f4e79 6px 24px,#163a5c 24px 38px)}
+.art.p5{background:
+  linear-gradient(180deg,transparent 0 52%,#2a4f7a 52% 70%,#5a3b22 70%),
+  radial-gradient(ellipse 10% 15% at 46% 72%,#d8c79c 0 70%,transparent 72%),
+  repeating-linear-gradient(168deg,#f06a2b 0 14px,#f2a33a 14px 26px,#c53c2a 26px 34px)}
+.paint-bottom{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;margin-top:24px}
+.method{padding:34px 40px}
+.method h4,.versions h4{margin:0 0 20px;font-size:28px;color:var(--gold);font-weight:500;letter-spacing:.1em}
+.method ol{margin:0;padding-left:0;list-style:none;counter-reset:m}
+.method li{counter-increment:m;font-size:23px;line-height:1.6;color:#d8d1e3;margin-bottom:14px;padding-left:52px;position:relative}
+.method li::before{content:counter(m,decimal-leading-zero);position:absolute;left:0;top:2px;font-family:var(--mono);color:var(--rose);font-size:20px}
+.method .chips{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.versions{padding:34px 40px}
+.ver{margin-bottom:26px}
+.ver .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.ver .hd b{font-family:var(--pixel);font-size:20px}
+.ver .hd span{font-size:21px;color:#c9c2d6}
+.bar{height:14px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--rose));width:calc(var(--p,0) * var(--w))}
+.bar.gray i{background:#5c566a}
+.dice{display:inline-block;font-size:21px;color:var(--mute);margin-top:6px}
+
+/* ========== 05 PPT & 图片 ========== */
+.ppt-grid{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:40px;flex:1;align-items:stretch}
+.donut-card{padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut{position:relative;width:300px;height:300px}
+.donut svg{transform:rotate(-90deg)}
+.donut circle{fill:none;stroke-width:34}
+.donut .track{stroke:rgba(255,255,255,.06)}
+.donut .a{stroke:url(#gGold);stroke-dasharray:0 691;stroke-linecap:round}
+.donut .b{stroke:var(--rose);stroke-dasharray:0 691;stroke-dashoffset:-418;stroke-linecap:round}
+.donut .center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.donut .center b{font-size:64px;font-family:var(--serif)}
+.donut .center span{display:block;font-size:20px;color:var(--mute)}
+.legend{margin-top:34px;width:100%}
+.legend div{display:flex;align-items:center;gap:14px;font-size:23px;margin-bottom:12px;color:#d8d1e3}
+.legend i{width:16px;height:16px;border-radius:4px;flex:none}
+.legend b{margin-left:auto;font-family:var(--mono)}
+.works{padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:22px;align-content:center}
+.works h4,.tools h4{grid-column:1/-1;margin:0 0 6px;font-size:28px;color:var(--gold);font-weight:500;letter-spacing:.1em}
+.work{padding:28px 24px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid var(--line);min-height:150px;position:relative;overflow:hidden}
+.work .em{font-size:44px}
+.work p{margin:14px 0 0;font-size:24px;line-height:1.45}
+.work::after{content:"";position:absolute;right:-40px;bottom:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(rgba(245,201,123,.25),transparent 70%)}
+.tools{padding:40px;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.tool{display:flex;align-items:center;gap:20px;padding:22px 24px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.tool .ti{width:62px;height:62px;flex:none;border-radius:16px;display:grid;place-items:center;font-size:30px;background:linear-gradient(145deg,rgba(123,224,255,.2),rgba(123,224,255,.03))}
+.tool b{display:block;font-family:var(--mono);font-size:24px;color:var(--cyan)}
+.tool span{font-size:20px;color:var(--mute)}
+
+/* ========== 06 经历 ========== */
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;flex:1;align-items:center}
+.exp{padding:54px 56px;min-height:600px;display:flex;flex-direction:column}
+.exp .when{font-family:var(--mono);font-size:20px;letter-spacing:.3em;color:var(--rose)}
+.exp h3{font-family:var(--serif);font-size:54px;margin:18px 0 12px;line-height:1.25}
+.exp .sub{font-size:25px;color:#b9b2c6;margin-bottom:auto;line-height:1.6}
+.vs{display:grid;grid-template-columns:110px 1fr;row-gap:24px;align-items:center;margin-top:40px;font-size:32px}
+.vs .lb{font-size:20px;color:var(--mute);font-family:var(--mono);letter-spacing:.2em}
+.vs .now{color:var(--gold);font-weight:700}
+.meter{margin-top:40px}
+.meter .ends{display:flex;justify-content:space-between;font-size:24px;color:var(--mute);margin-bottom:16px}
+.meter .ends b{color:var(--gold)}
+.meter .track{position:relative;height:16px;border-radius:99px;background:rgba(255,255,255,.07)}
+.meter .fillm{position:absolute;inset:0 auto 0 0;border-radius:99px;background:linear-gradient(90deg,#6d5cff,var(--rose),var(--gold));width:calc(8% + var(--p,0) * 82%)}
+.meter .knob{position:absolute;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:24px;box-shadow:0 0 30px rgba(245,201,123,.7);left:calc(8% + var(--p,0) * 82%)}
+.money{font-family:var(--serif);font-size:96px;font-weight:900;line-height:1;margin:6px 0 0}
+.money small{font-size:36px;margin-left:8px;color:var(--mute);font-weight:600}
+
+/* ========== 07 有趣的事 ========== */
+.fun-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;flex:1;align-items:center}
+.fun{padding:50px 46px;min-height:560px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.fun .when{font-family:var(--mono);font-size:19px;letter-spacing:.25em;color:var(--mute)}
+.fun h3{font-size:34px;margin:14px 0 30px}
+.fun .big{font-family:var(--serif);font-size:130px;font-weight:900;line-height:1}
+.fun .unit{font-size:28px;color:var(--mute);margin-top:12px}
+.fun .note{margin-top:auto;font-size:22px;line-height:1.65;color:#c9c2d6;padding-top:26px;border-top:1px dashed var(--line)}
+.fun .plus{display:inline-block;margin-top:18px;padding:10px 20px;border-radius:14px;background:rgba(255,92,122,.12);color:var(--rose);font-weight:700;font-size:30px;font-family:var(--mono)}
+.fun .wm{position:absolute;right:-20px;top:-10px;font-size:180px;opacity:.07}
+.ticket{position:relative;padding:22px 26px;border-radius:14px;background:linear-gradient(135deg,rgba(245,201,123,.18),rgba(255,92,122,.1));border:1px dashed rgba(245,201,123,.5);font-size:22px}
+.ticket b{display:block;font-size:56px;font-family:var(--serif);margin-bottom:4px}
+
+/* ========== 08 坑 ========== */
+.s-pit{justify-content:center;align-items:center;text-align:center}
+.pit-label{font-family:var(--mono);letter-spacing:.6em;font-size:22px;color:var(--rose);margin-bottom:46px}
+.pit-quote{font-family:var(--serif);font-size:56px;line-height:1.6;max-width:1400px;margin:0;color:#e9e3f0}
+.pit-quote .sigh{display:block;color:var(--mute);font-size:38px;margin-top:16px}
+.pit-big{margin-top:80px;font-family:var(--serif);font-size:96px;font-weight:900;line-height:1.3}
+.pit-big .no{color:#6f6980}
+
+/* ========== 09 汇总 ========== */
+.s-sum{padding:84px 110px}
+.bento{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:26px}
+.tile{position:relative;border-radius:28px;padding:30px 34px;overflow:hidden;display:flex;flex-direction:column;
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.015));
+  border:1px solid var(--line);
+  box-shadow:0 0 0 calc(var(--lit,0) * 2px) rgba(245,201,123,.9),0 0 calc(var(--lit,0) * 70px) rgba(245,201,123,.4),0 30px 80px rgba(0,0,0,.45)}
+.tile::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 30% 0%,rgba(245,201,123,.3),transparent 65%);opacity:var(--lit,0)}
+.tile .tn{font-family:var(--pixel);font-size:15px;color:var(--rose);position:relative}
+.tile .tt{font-size:26px;color:#cfc8db;margin-top:12px;position:relative}
+.tile .tv{font-family:var(--serif);font-size:56px;font-weight:900;margin-top:auto;line-height:1.1;position:relative}
+.tile .ts{font-size:19px;color:var(--mute);margin-top:8px;position:relative}
+.tile .em{position:absolute;right:22px;top:16px;font-size:60px;opacity:.16}
+.t-name{grid-column:2/4;grid-row:1/3;align-items:center;justify-content:center;text-align:center;
+  border-color:rgba(245,201,123,.35);
+  background:radial-gradient(circle at 50% 40%,rgba(255,92,122,.2),transparent 70%),linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.015))}
+.t-name .eb{font-family:var(--mono);font-size:18px;letter-spacing:.6em;color:var(--mute)}
+.t-name .big{font-family:var(--serif);font-size:170px;font-weight:900;letter-spacing:.12em;line-height:1.1;margin:18px 0 10px;
+  transform:scale(calc(1 + var(--k) * .035))}
+.t-name .sl{font-size:34px;font-weight:300;letter-spacing:.1em}
+.t-name .sl em{font-style:normal;color:var(--rose);font-weight:700}
+.t-name .chipline{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+
+/* ========== 10 结尾 ========== */
+.s-end{justify-content:center;align-items:center;text-align:center}
+.end-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.end-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,rgba(7,6,11,.25) 0%,rgba(7,6,11,.72) 100%)}
+.end-title{font-family:var(--serif);font-size:210px;font-weight:900;margin:0;letter-spacing:.18em;line-height:1.1;position:relative;z-index:2}
+.end-title span{display:inline-block}
+.end-sub{font-size:56px;font-weight:300;letter-spacing:.3em;margin-top:30px;position:relative;z-index:2}
+.end-caption{position:relative;z-index:2;margin-top:44px}
+.end-caption .cap-line{font-family:var(--serif);font-size:44px;font-weight:700;letter-spacing:.06em;color:var(--gold);text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.end-caption .cap-sub{font-size:26px;font-weight:300;letter-spacing:.14em;color:#e9e3f0;margin-top:14px;text-shadow:0 2px 16px rgba(0,0,0,.6)}
+.sign{margin-top:80px;display:inline-flex;align-items:center;gap:30px;padding:26px 44px;position:relative;z-index:2}
+.sign .av{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:40px;font-weight:900;background:linear-gradient(135deg,var(--rose),var(--gold));color:#1a0d12}
+.sign .txt{text-align:left}
+.sign .txt b{font-size:36px;display:block}
+.sign .txt span{font-size:22px;color:var(--mute)}
+#petals{position:absolute;inset:0;overflow:hidden;z-index:1}
+.petal{position:absolute;top:-60px;left:var(--x);width:var(--s);height:calc(var(--s) * .8);border-radius:0 100% 0 100%;
+  background:linear-gradient(135deg,#ff8aa0,#c9304f);opacity:0;animation:fall var(--t) linear var(--d) infinite}
+@keyframes fall{
+  0%{transform:translate(0,0) rotate(0);opacity:0}
+  10%{opacity:.9}
+  100%{transform:translate(var(--dx),1220px) rotate(620deg);opacity:0}
+}
+
+/* ========== 开始遮罩 & 控制 UI ========== */
+#start{position:fixed;inset:0;z-index:300;display:grid;place-items:center;cursor:pointer;transition:opacity .7s;
+  background:radial-gradient(800px 500px at 50% 45%,rgba(255,92,122,.16),transparent 70%),#07060b}
+#start.hide{opacity:0;pointer-events:none}
+#start .box{text-align:center}
+#start h2{font-family:var(--serif);font-size:56px;margin:0 0 14px;letter-spacing:.15em}
+#start p{font-family:var(--mono);font-size:14px;letter-spacing:.3em;color:var(--mute);margin:0 0 40px}
+#start button{border:0;cursor:pointer;padding:18px 42px;border-radius:999px;font-size:18px;font-family:var(--sans);font-weight:700;color:#1a0d12;
+  background:linear-gradient(135deg,var(--gold),var(--rose));box-shadow:0 20px 60px rgba(255,92,122,.4)}
+#ui{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);width:min(1100px,92vw);display:flex;align-items:center;gap:18px;
+  padding:14px 20px;border-radius:18px;background:rgba(15,13,22,.8);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px);
+  opacity:0;transition:opacity .4s;z-index:100;font-family:var(--mono);font-size:13px;color:#bdb6c9}
+#ui.show{opacity:1}
+#play{width:40px;height:40px;border-radius:12px;border:0;background:var(--rose);color:#fff;font-size:15px;cursor:pointer;flex:none}
+#bar{position:relative;flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.12);cursor:pointer}
+#fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--rose))}
+.tick{position:absolute;top:-4px;width:2px;height:14px;background:rgba(255,255,255,.35)}
+.tick span{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;color:#8d8798}
+#hint{position:fixed;right:20px;top:16px;font-family:var(--mono);font-size:12px;color:#8d8798;opacity:0;transition:opacity .4s;z-index:100}
+#hint.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <!-- 01 开场 -->
+  <section class="scene" id="intro" data-bars="4" data-energy="0" data-name="开场">
+    <div class="world s-intro">
+      <div class="ring-wrap it" data-r="s" data-at="0" data-len="3" data-mute=""><div class="ring"></div></div>
+      <div class="eyebrow it" data-at="0.5" data-len="2" data-mute="">SELF · INTRODUCTION</div>
+      <h1 class="hero">
+        <span class="it" data-r="s" data-at="1">我</span><span class="it" data-r="s" data-at="2">是</span><span class="it gold-text" data-r="s" data-at="3">罗</span><span class="it gold-text" data-r="s" data-at="4">洋</span>
+      </h1>
+      <p class="slogan it" data-at="8">认识我罗洋，能力<em>嘎嘎涨</em> <span class="rose">🌹</span><span class="rose">🌹</span></p>
+      <div class="nick it" data-at="11.5"><span class="dot"></span>2群昵称 · 爱分享的洋哥（早）</div>
+    </div>
+  </section>
+
+  <!-- 02 我是谁 -->
+  <section class="scene" id="who" data-bars="6" data-energy="1" data-name="我是谁">
+    <div class="world">
+      <div class="chap it" data-at="0"><div class="core"><span class="no">00</span><span class="ttl">我是谁</span><span class="en">WHO AM I</span></div><i class="ln"></i></div>
+      <div class="profile-grid">
+        <div class="code-win it" data-r="l" data-at="3">
+          <div class="win-bar"><i></i><i></i><i></i><span>luoyang.js</span></div>
+          <pre class="code" data-fx="type" data-fa="4" data-fl="6"></pre>
+        </div>
+        <div class="path">
+          <div class="node card it" id="n1" data-at="11"><div class="ic">⚗️</div><div><b>广东工业大学</b><span>应用化学 · 实验室出身</span></div></div>
+          <div class="link it" data-r="none" data-at="12.5" data-mute=""></div>
+          <div class="node card it" id="n2" data-at="13"><div class="ic mono">&lt;/&gt;</div><div><b>自学编程</b><span>从烧杯走向代码</span></div></div>
+          <div class="link it" data-r="none" data-at="14.5" data-mute=""></div>
+          <div class="node card it" id="n3" data-at="15"><div class="ic">💎</div><div><b>国内珠宝公司</b><span>RPA 电商运营自动化 · 代码开发</span></div></div>
+          <div class="link it" data-r="none" data-at="16.5" data-mute=""></div>
+          <div class="node now it" id="n4" data-at="17"><div class="ic">🧭</div><div><b>现在</b><span>离职求职中 · 也想自己做点小生意</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 AI 像素视频 -->
+  <section class="scene" id="pixel" data-bars="6" data-energy="1" data-mood="chip" data-name="像素视频">
+    <div class="world">
+      <div class="chap it" data-at="0"><div class="core"><span class="no">01</span><span class="ttl">AI 像素视频</span><span class="en">PIXEL × AI</span></div><i class="ln"></i></div>
+      <div class="pix-grid">
+        <div class="steps">
+          <div class="step card it" id="p1" data-r="l" data-at="3">
+            <div class="n">01</div>
+            <div>
+              <h3>Opus 根据文案做导演</h3>
+              <div class="tags">
+                <span class="tag it" data-r="s" data-at="4">🎬 场景</span>
+                <span class="tag it" data-r="s" data-at="4.5">🔭 景别</span>
+                <span class="tag it" data-r="s" data-at="5">🎥 基础运镜</span>
+                <span class="tag it" data-r="s" data-at="5.5">🔊 音效</span>
+              </div>
+            </div>
+          </div>
+          <div class="step card it" id="p2" data-r="l" data-at="6">
+            <div class="n">02</div>
+            <div>
+              <h3>像素风游戏角色</h3>
+              <p>设计表情、动作的连续运动快照图片，再用代码抠图</p>
+            </div>
+          </div>
+          <div class="step card hl it" id="p3" data-r="l" data-at="16">
+            <div class="n">03</div>
+            <div>
+              <h3>文案才是爆款引擎</h3>
+              <p>好文案推动作品火爆的概率更大</p>
+            </div>
+          </div>
+        </div>
+        <div class="crt card it" data-r="s" data-at="9">
+          <div class="screen">
+            <div class="moon"></div>
+            <div class="star" style="left:12%;top:18%"></div>
+            <div class="star" style="left:30%;top:9%;animation-delay:.27s"></div>
+            <div class="star" style="left:52%;top:22%;animation-delay:.54s"></div>
+            <div class="star" style="left:68%;top:12%;animation-delay:.81s"></div>
+            <div class="hud">LV.99 YANG<br>EXP ▮▮▮▮▮▮▯</div>
+            <canvas id="sprite" data-fx="sprite" width="280" height="280"></canvas>
+          </div>
+          <div class="sheet">
+            <div class="it" data-r="s" data-at="13"><canvas class="sh" data-f="idle" width="120" height="130"></canvas><span>待机</span></div>
+            <div class="it" data-r="s" data-at="13.5"><canvas class="sh" data-f="blink" width="120" height="130"></canvas><span>眨眼</span></div>
+            <div class="it" data-r="s" data-at="14"><canvas class="sh" data-f="step" width="120" height="130"></canvas><span>迈步</span></div>
+            <div class="it" data-r="s" data-at="14.5"><canvas class="sh" data-f="happy" width="120" height="130"></canvas><span>开心</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 名画复刻 -->
+  <section class="scene" id="paint" data-bars="8" data-energy="2" data-name="名画复刻">
+    <div class="world">
+      <div class="chap it" data-at="0"><div class="core"><span class="no">02</span><span class="ttl">名画复刻</span><span class="en">MASTERPIECE REMAKE</span></div><i class="ln"></i></div>
+      <div class="gallery">
+        <div class="pf it" data-r="drop" data-at="3"><div class="art p1"></div><div class="cap">NO.01</div></div>
+        <div class="pf it" data-r="drop" data-at="4"><div class="art p2"></div><div class="cap">NO.02</div></div>
+        <div class="pf best it" data-r="drop" data-at="5"><div class="art p3"></div><div class="badge">👁 <span data-fx="count" data-to="8000" data-fa="8.5" data-fl="3">0</span> 浏览</div><div class="cap">BEST</div></div>
+        <div class="pf it" data-r="drop" data-at="6"><div class="art p4"></div><div class="cap">NO.04</div></div>
+        <div class="pf it" data-r="drop" data-at="7"><div class="art p5"></div><div class="cap">NO.05</div></div>
+      </div>
+      <div class="paint-bottom">
+        <div class="method card it" data-at="12">
+          <h4>— 我的做法</h4>
+          <ol>
+            <li class="it" data-r="l" data-at="13">看泽央 B 站的启动包分享，先站在前人肩膀上</li>
+            <li class="it" data-r="l" data-at="14.5">给 uu 做 30s / 120s 的视频：用<b>电影调度</b>的方式落到文字</li>
+          </ol>
+          <div class="chips it" data-at="15.5">
+            <span class="tag">🖼 画面里有什么</span><span class="tag">🎥 如何运镜</span><span class="tag">🌿 前景</span><span class="tag">🔀 转场取材</span>
+          </div>
+        </div>
+        <div class="versions card it" data-at="17">
+          <h4>— AI 分镜迭代</h4>
+          <div class="ver">
+            <div class="hd"><b>1.0</b><span>镜头之间没有连贯性，纯靠硬凑</span></div>
+            <div class="bar gray"><i data-fx="prog" data-fa="18" data-fl="1.5" style="--w:22%"></i></div>
+          </div>
+          <div class="ver">
+            <div class="hd"><b class="gold-text">2.0</b><span>故事有代入感 ✓ 运镜信息点待打磨</span></div>
+            <div class="bar"><i data-fx="prog" data-fa="20" data-fl="2.5" style="--w:72%"></i></div>
+          </div>
+          <div class="dice it" data-at="23">🎲 发布 5 条 · 抽卡率太高 → 正在补导演思维与故事写作</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 PPT & 图片 -->
+  <section class="scene" id="ppt" data-bars="6" data-energy="1" data-name="PPT设计">
+    <div class="world">
+      <div class="chap it" data-at="0"><div class="core"><span class="no">03</span><span class="ttl">PPT &amp; 图片制作</span><span class="en">DESIGN WORK</span></div><i class="ln"></i></div>
+      <div class="ppt-grid">
+        <div class="donut-card card it" data-r="s" data-at="3">
+          <div class="donut">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <defs>
+                <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#fff1cf"></stop>
+                  <stop offset="1" stop-color="#f5c97b"></stop>
+                </linearGradient>
+              </defs>
+              <circle class="track" cx="150" cy="150" r="110"></circle>
+              <circle class="a" cx="150" cy="150" r="110" data-fx="dash" data-to="404" data-fa="4" data-fl="2.5"></circle>
+              <circle class="b" cx="150" cy="150" r="110" data-fx="dash" data-to="262" data-fa="6" data-fl="2"></circle>
+            </svg>
+            <div class="center"><div><b>100%</b><span>一份好作品</span></div></div>
+          </div>
+          <div class="legend">
+            <div class="it" data-at="4.5"><i style="background:var(--gold)"></i>排版与美感 · GPT 设计<b>60%</b></div>
+            <div class="it" data-at="6.5"><i style="background:var(--rose)"></i>排版与客户沟通<b>40%</b></div>
+          </div>
+        </div>
+        <div class="works card it" data-at="9">
+          <h4>— 做过的图</h4>
+          <div class="work it" data-r="s" data-at="9.5"><div class="em">🏢</div><p>公司介绍展板</p></div>
+          <div class="work it" data-r="s" data-at="10.5"><div class="em">📷</div><p>摄影师产品套餐海报</p></div>
+          <div class="work it" data-r="s" data-at="11.5"><div class="em">🎮</div><p>游戏公会招聘</p></div>
+          <div class="work it" data-r="s" data-at="12.5"><div class="em">🛍️</div><p>电商灯箱布画布设计</p></div>
+        </div>
+        <div class="tools card it" data-at="14">
+          <h4>— 趁手工具</h4>
+          <div class="tool it" data-r="l" data-at="14.5"><div class="ti">✂️</div><div><b>koututu.com</b><span>在线抠图</span></div></div>
+          <div class="tool it" data-r="l" data-at="15.5"><div class="ti">🎨</div><div><b>photopea.com</b><span>浏览器里的 PS</span></div></div>
+          <div class="tool it" data-r="l" data-at="16.5"><div class="ti">🖥</div><div><b>Keynote</b><span>大尺寸海报，缩放不易糊</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 经历 -->
+  <section class="scene" id="exp" data-bars="6" data-energy="2" data-name="经历">
+    <div class="world">
+      <div class="chap it" data-at="0"><div class="core"><span class="no">04</span><span class="ttl">经历</span><span class="en">GROWTH</span></div><i class="ln"></i></div>
+      <div class="exp-grid">
+        <div class="exp card it" id="e1" data-r="l" data-at="3">
+          <div class="when">大四</div>
+          <h3>老王的老友记<br>第 1、2 季</h3>
+          <div class="sub">最大感触：主动接受看英文获取信息</div>
+          <div class="vs">
+            <span class="lb">以前</span><span><span class="strike" data-fx="prog" data-fa="6" data-fl="1">看到论文文字就想跑 🏃</span></span>
+            <span class="lb">现在</span><span class="now it" data-r="s" data-at="8">觉得也就一般 😎</span>
+          </div>
+        </div>
+        <div class="exp card it" id="e2" data-at="11">
+          <div class="when">大学</div>
+          <div class="money">¥<span data-fx="count" data-to="20000" data-fa="12" data-fl="2.5">0</span><small>+</small></div>
+          <h3 style="font-size:42px">付费参加演讲表达 · 商业思维训练</h3>
+          <div class="meter" data-fx="prog" data-fa="14" data-fl="3.5">
+            <div class="ends"><span>内向</span><b>开朗</b></div>
+            <div class="track"><div class="fillm"></div><div class="knob">😄</div></div>
+          </div>
+          <div class="sub it" data-at="18" style="margin:30px 0 0">不怕搭话，也不怕公众表达</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 有趣的事 -->
+  <section class="scene" id="fun" data-bars="6" data-energy="2" data-name="有趣的事">
+    <div class="world">
+      <div class="chap it" data-at="0"><div class="core"><span class="no">05</span><span class="ttl">有趣的事</span><span class="en">SIDE HUSTLE</span></div><i class="ln"></i></div>
+      <div class="fun-grid">
+        <div class="fun card it" id="f1" data-at="3">
+          <div class="wm">📱</div>
+          <div class="when">初二</div>
+          <h3>移动集赞活动</h3>
+          <div class="big gold-text"><span data-fx="count" data-to="800" data-fa="4" data-fl="2">0</span></div>
+          <div class="unit">元话费到手</div>
+          <div class="note it" data-at="6.5">从那时起，就开始在微信和互联网上找赚钱的小生意</div>
+        </div>
+        <div class="fun card it" id="f2" data-at="9">
+          <div class="wm">📕</div>
+          <div class="when">小红书</div>
+          <h3>单篇帖子火爆出圈</h3>
+          <div class="big gold-text"><span data-fx="count" data-to="2" data-fa="10" data-fl="1">0</span>万+</div>
+          <div><span class="plus it" data-r="s" data-at="12">涨粉 +<span data-fx="count" data-to="1900" data-fa="12" data-fl="2">0</span></span></div>
+          <div class="note it" data-at="13">一篇内容的杠杆，比想象中更大</div>
+        </div>
+        <div class="fun card it" id="f3" data-at="15">
+          <div class="wm">🎬</div>
+          <div class="when">卖电影票</div>
+          <h3>钱倒是没赚到什么</h3>
+          <div class="ticket it" data-r="s" data-at="16"><b>但是摸清了 👇</b>低价电影票小程序 · 买券渠道 · 自己收电影券的方式</div>
+          <div class="note it" data-at="18">没赚到钱，赚到了信息差地图</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 坑 -->
+  <section class="scene" id="pit" data-bars="4" data-energy="0" data-mood="calm" data-name="踩坑">
+    <div class="world s-pit">
+      <div class="pit-label it" data-at="0" data-mute="">一些自己觉得的坑</div>
+      <p class="pit-quote it" data-at="2" data-len="2">大学没想到去找实习，<br>也没遇到给我提供这方面思路的人
+        <span class="sigh it" data-at="6" data-len="2">—— 其实挺遗憾的</span>
+      </p>
+      <div class="pit-big it" data-at="9">
+        <span class="no strike" data-fx="prog" data-fa="11" data-fl="1">多做点实验</span>，<span class="gold-text">不如多做点实习</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 汇总 -->
+  <section class="scene" id="sum" data-bars="6" data-energy="3" data-name="汇总">
+    <div class="world s-sum">
+      <div class="bento" data-fx="chase" data-fa="12">
+        <div class="tile t-name it" data-r="s" data-at="0" data-len="1.5" data-mute="">
+          <div class="eb">ALL IN ONE</div>
+          <div class="big gold-text">罗洋</div>
+          <div class="sl">认识我罗洋，能力<em>嘎嘎涨</em> 🌹🌹</div>
+          <div class="chipline"><span class="tag">⚗️ 应化</span><span class="tag">&lt;/&gt; 自学编程</span><span class="tag">🤖 RPA</span><span class="tag">🎬 AI 视频</span><span class="tag">🎨 设计</span></div>
+        </div>
+        <div class="tile it" data-ord="0" data-r="fly" data-dx="-520" data-dy="-320" data-rot="-10" data-at="4" style="grid-column:1;grid-row:1">
+          <div class="em">🧭</div><div class="tn">00</div><div class="tt">我是谁</div><div class="tv" style="font-size:40px">应化 → RPA</div><div class="ts">广工 · 自学编程 · 珠宝电商自动化</div>
+        </div>
+        <div class="tile it" data-ord="1" data-r="fly" data-dx="520" data-dy="-320" data-rot="10" data-at="5" style="grid-column:4;grid-row:1">
+          <div class="em">👾</div><div class="tn">01</div><div class="tt">AI 像素视频</div><div class="tv">文案为王</div><div class="ts">导演化分镜 · 像素快照</div>
+        </div>
+        <div class="tile it" data-ord="2" data-r="fly" data-dx="620" data-dy="0" data-rot="8" data-at="6" style="grid-column:4;grid-row:2">
+          <div class="em">🖼</div><div class="tn">02</div><div class="tt">名画复刻</div><div class="tv">8,000</div><div class="ts">最佳浏览 · 分镜 1.0 → 2.0</div>
+        </div>
+        <div class="tile it" data-ord="3" data-r="fly" data-dx="520" data-dy="320" data-rot="10" data-at="7" style="grid-column:4;grid-row:3">
+          <div class="em">🎨</div><div class="tn">03</div><div class="tt">PPT &amp; 图片</div><div class="tv">60 / 40</div><div class="ts">AI 美感 × 客户沟通</div>
+        </div>
+        <div class="tile it" data-ord="4" data-r="fly" data-dx="0" data-dy="420" data-rot="6" data-at="8" style="grid-column:3;grid-row:3">
+          <div class="em">🎤</div><div class="tn">04</div><div class="tt">经历</div><div class="tv">¥20,000+</div><div class="ts">内向 → 开朗 · 不怕英文</div>
+        </div>
+        <div class="tile it" data-ord="5" data-r="fly" data-dx="0" data-dy="420" data-rot="-6" data-at="9" style="grid-column:2;grid-row:3">
+          <div class="em">💰</div><div class="tn">05</div><div class="tt">有趣的事</div><div class="tv" style="font-size:44px">800 · 2万+</div><div class="ts">话费 · 爆帖 · 涨粉 1900</div>
+        </div>
+        <div class="tile it" data-ord="6" data-r="fly" data-dx="-520" data-dy="320" data-rot="-10" data-at="10" style="grid-column:1;grid-row:3">
+          <div class="em">🕳</div><div class="tn">06</div><div class="tt">踩坑</div><div class="tv" style="font-size:44px">多做实习</div><div class="ts">比多做实验更值</div>
+        </div>
+        <div class="tile it" data-ord="7" data-r="fly" data-dx="-620" data-dy="0" data-rot="-8" data-at="11" style="grid-column:1;grid-row:2">
+          <div class="em">🚀</div><div class="tn">NOW</div><div class="tt">现在</div><div class="tv" style="font-size:44px">求职 · 搞事</div><div class="ts">欢迎聊工作 / 合作</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 结尾 -->
+  <section class="scene" id="end" data-bars="4" data-energy="0" data-mood="calm" data-name="结尾">
+    <div class="world s-end">
+      <video class="end-video" src="demo_char_cd_train.mp4" autoplay muted loop playsinline></video>
+      <div class="end-overlay"></div>
+      <div id="petals"></div>
+      <h1 class="end-title">
+        <span class="it gold-text" data-r="s" data-at="0.01">江</span><span class="it gold-text" data-r="s" data-at="1">湖</span><span class="it gold-text" data-r="s" data-at="2">漫</span><span class="it gold-text" data-r="s" data-at="3">漫</span>
+      </h1>
+      <div class="end-sub it" data-at="5" data-len="2">期待见证彼此成长</div>
+      <div class="end-caption it" data-at="6" data-len="3">
+        <div class="cap-line">🎵 我的新方向 · HeartAI 辅助</div>
+        <div class="cap-sub">获得希望最快的方式之一，是一首旋律</div>
+      </div>
+      <div class="sign card it" data-at="8">
+        <div class="av">洋</div>
+        <div class="txt"><b>罗洋 · 爱分享的洋哥（早）</b><span>广工应化 → 自学编程 → RPA 开发 · 求职中 / 欢迎聊合作 🌹</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="flash"></div>
+  <div class="frame-mark tl"><span class="rec">●</span> REC&nbsp;&nbsp;LUOYANG.MP4</div>
+  <div class="frame-mark tr" id="sceneMark">01 / 10</div>
+  <div class="frame-mark bl" id="beats">♩ 110 BPM</div>
+  <div class="frame-mark br" id="tc">00:00:00</div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+</div>
+
+<div id="start">
+  <div class="box">
+    <h2>我是罗洋</h2>
+    <p>SELF INTRODUCTION · WITH BGM</p>
+    <button>▶ 点击开始播放（含配乐）</button>
+  </div>
+</div>
+<div id="ui">
+  <button id="play">❚❚</button>
+  <div id="bar"><div id="fill"></div><div id="ticks"></div></div>
+  <span id="time">00:00 / 00:00</span>
+</div>
+<div id="hint">Space 播放/暂停 · ← → 切章 · R 重播 · M 静音 · F 全屏</div>
+
+<script>
+
+/* =========================================================
+   基础
+   ========================================================= */
+const BPM = 110;
+const SPB = 60 / BPM;
+const BARSEC = SPB * 4;
+const clamp = v => Math.max(0, Math.min(1, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const outQuart = p => 1 - Math.pow(1 - p, 4);
+const outCubic = p => 1 - Math.pow(1 - p, 3);
+const inOut = p => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+
+const stage = document.getElementById('stage');
+function fit() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener('resize', fit);
+fit();
+
+/* =========================================================
+   镜头脚本：[拍点, 聚焦目标(null=全景汇总), 最大缩放, 运镜时长(拍)]
+   ========================================================= */
+const STEPS = {
+  intro: [[0, '.hero', 1.3, 1.5], [8, '.slogan', 1.6], [11, null, 1, 2.5]],
+  who:   [[0, '.chap .core', 1.6], [3, '.code-win', 1.45], [11, '#n1', 1.9], [13, '#n2', 1.9], [15, '#n3', 1.9], [17, '#n4', 1.9], [20, null, 1, 2.5]],
+  pixel: [[0, '.chap .core', 1.6], [3, '#p1', 1.6], [6, '#p2', 1.6], [9, '.screen', 1.5], [13, '.sheet', 1.7], [16, '#p3', 1.6], [20, null, 1, 2.5]],
+  paint: [[0, '.chap .core', 1.6], [3, '.gallery', 1.2], [8, '.pf.best', 1.9], [12, '.method', 1.5], [17, '.versions', 1.6], [23, '.dice', 1.6], [26, null, 1, 2.5]],
+  ppt:   [[0, '.chap .core', 1.6], [3, '.donut-card', 1.5], [9, '.works', 1.4], [14, '.tools', 1.5], [20, null, 1, 2.5]],
+  exp:   [[0, '.chap .core', 1.6], [3, '#e1', 1.3], [11, '#e2', 1.3], [20, null, 1, 2.5]],
+  fun:   [[0, '.chap .core', 1.6], [3, '#f1', 1.4], [9, '#f2', 1.4], [15, '#f3', 1.4], [20, null, 1, 2.5]],
+  pit:   [[0, '.pit-quote', 1.25, 2.5], [9, '.pit-big', 1.2, 2], [13, null, 1, 2.5]],
+  sum:   [[0, '.t-name', 1.5, 1], [4, null, 1, 3.5]],
+  end:   [[0, '.end-title', 1.15, 1], [8, null, 1, 3]]
+};
+
+const SC = [...document.querySelectorAll('.scene')].map(el => {
+  const world = el.querySelector('.world');
+  const steps = (STEPS[el.id] || [[0, null]]).map(([b, sel, z = 1.7, dur = 1.6]) => ({
+    b, z, dur, el: sel ? world.querySelector(sel) : null, cam: { k: 1, x: 0, y: 0 }
+  }));
+  const items = [...world.querySelectorAll('.it')].map(e => ({
+    e,
+    at: +(e.dataset.at || 0),
+    len: +(e.dataset.len || 1.2),
+    r: e.dataset.r || 'rise',
+    dx: +(e.dataset.dx || 0),
+    dy: +(e.dataset.dy || 0),
+    rot: +(e.dataset.rot || 0),
+    top: !e.parentElement.closest('.it'),
+    mute: e.hasAttribute('data-mute'),
+    dim: 0
+  }));
+  const fx = [...world.querySelectorAll('[data-fx]')].map(e => {
+    const f = {
+      e, type: e.dataset.fx,
+      at: +(e.dataset.fa || 0),
+      len: +(e.dataset.fl || 1.5),
+      to: +(e.dataset.to || 0),
+      last: null
+    };
+    if (f.type === 'chase') {
+      f.tiles = [...e.querySelectorAll('[data-ord]')].sort((a, b) => a.dataset.ord - b.dataset.ord);
+    }
+    return f;
+  });
+  const blips = new Set();
+  items.forEach(it => {
+    if (it.at > 0 && it.r !== 'none' && !it.mute) blips.add(Math.round(it.at * 4));
+  });
+  const whoosh = new Set(steps.filter(s => s.b > 0).map(s => Math.round(s.b * 4)));
+  return {
+    el, world, steps, items, fx, blips, whoosh,
+    name: el.dataset.name,
+    bars: +el.dataset.bars,
+    beats: +el.dataset.bars * 4,
+    energy: +el.dataset.energy,
+    mood: el.dataset.mood || ''
+  };
+});
+let acc = 0;
+SC.forEach(s => { s.start = acc; acc += s.beats; });
+const TOTAL = acc;
+const sceneIndex = beat => {
+  let i = 0;
+  for (let j = 0; j < SC.length; j++) if (beat >= SC[j].start) i = j;
+  return i;
+};
+
+/* ---------- 测量聚焦目标在世界坐标中的位置 ---------- */
+function rectIn(el, root) {
+  let x = 0, y = 0, n = el;
+  while (n && n !== root) {
+    x += n.offsetLeft;
+    y += n.offsetTop;
+    n = n.offsetParent;
+  }
+  return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+}
+function measure() {
+  SC.forEach(s => s.steps.forEach(st => {
+    if (!st.el) { st.cam = { k: 1, x: 0, y: 0 }; return; }
+    const r = rectIn(st.el, s.world);
+    let k = Math.min(st.z, 1500 / r.w, 820 / r.h);
+    k = Math.max(1, k);
+    st.cam = { k, x: 960 - (r.x + r.w / 2) * k, y: 540 - (r.y + r.h / 2) * k };
+  }));
+}
+measure();
+document.fonts && document.fonts.ready.then(measure);
+setTimeout(measure, 1200);
+
+/* ---------- 镜头插值 ---------- */
+const toCen = c => ({ cx: (960 - c.x) / c.k, cy: (540 - c.y) / c.k, k: c.k });
+const fromCen = (cx, cy, k) => ({ k, x: 960 - cx * k, y: 540 - cy * k });
+const zoomAbout = (c, f) => ({ k: c.k * f, x: 960 - (960 - c.x) * f, y: 540 - (540 - c.y) * f });
+function cameraAt(s, lb, kv) {
+  let i = 0;
+  for (let j = 0; j < s.steps.length; j++) if (lb >= s.steps[j].b) i = j;
+  const st = s.steps[i];
+  const to = st.cam;
+  const from = i > 0 ? s.steps[i - 1].cam : zoomAbout(to, 1.18);
+  const p = inOut(clamp((lb - st.b) / st.dur));
+  const A = toCen(from), B = toCen(to);
+  let c = fromCen(lerp(A.cx, B.cx, p), lerp(A.cy, B.cy, p), Math.exp(lerp(Math.log(A.k), Math.log(B.k), p)));
+  const hold = Math.max(0, lb - st.b - st.dur);
+  c = zoomAbout(c, (1 + hold * 0.006) * (1 + kv * 0.005));
+  return { c, focus: st.el };
+}
+
+/* =========================================================
+   像素角色
+   ========================================================= */
+const PAL = {
+  k: '#1a1020', h: '#2e2450', s: '#ffd2b0', e: '#1a1020', p: '#ff9aa8',
+  m: '#b8434f', r: '#ff5c7a', g: '#f5c97b', b: '#3a4a8a'
+};
+const BASE = [
+  '....kkkkkk....',
+  '...khhhhhhk...',
+  '..khhhhhhhhk..',
+  '..khhhhhhhhk..',
+  '..khsssssshk..',
+  '..kssessessk..',
+  '..kpsssssspk..',
+  '..ksssmmsssk..',
+  '...kssssssk...',
+  '..krrrrrrrrk..',
+  '.ksrrrggrrrsk.',
+  '.ksrrrrrrrrsk.',
+  '..krrrrrrrrk..',
+  '..kbbbbbbbbk..'
+];
+const LEGS_A = ['..kbbbkkbbbk..', '..kbbk..kbbk..', '..kkkk..kkkk..', '..............'];
+const LEGS_B = ['...kbbkkbbk...', '...kbk..kbk...', '..kkk.....kk..', '..............'];
+function makeFrame(o = {}) {
+  const b = BASE.slice();
+  if (o.blink) b[5] = '..kssssssssk..';
+  if (o.happy) {
+    b[5] = '..kskssssksk..';
+    b[7] = '..kssmmmmssk..';
+  }
+  return b.concat(o.step ? LEGS_B : LEGS_A);
+}
+const FRAMES = {
+  idle: makeFrame(),
+  blink: makeFrame({ blink: true }),
+  step: makeFrame({ step: true }),
+  happy: makeFrame({ happy: true })
+};
+function drawSprite(ctx, rows, px, ox, oy) {
+  rows.forEach((row, y) => {
+    [...row].forEach((c, x) => {
+      if (c === '.') return;
+      ctx.fillStyle = PAL[c];
+      ctx.fillRect(ox + x * px, oy + y * px, px, px);
+    });
+  });
+}
+document.querySelectorAll('canvas.sh').forEach(cv => {
+  drawSprite(cv.getContext('2d'), FRAMES[cv.dataset.f], 6, 18, 10);
+});
+const spCtx = document.getElementById('sprite').getContext('2d');
+function drawMainSprite(lb, kv) {
+  spCtx.clearRect(0, 0, 280, 280);
+  const walk = Math.floor(lb * 2) % 2 === 1;
+  const blink = lb % 4 > 3.75;
+  const happy = Math.floor(lb / 2) % 4 === 3;
+  const jump = Math.round(kv * 3) * 4;
+  spCtx.fillStyle = 'rgba(0,0,0,.35)';
+  spCtx.fillRect(70 + jump / 2, 262, 140 - jump, 10);
+  drawSprite(spCtx, makeFrame({ step: walk, blink, happy }), 14, 42, 8 - jump);
+}
+
+/* =========================================================
+   打字机代码
+   ========================================================= */
+const TOKENS = [
+  ['kw', 'const '], ['fn', 'luoyang'], ['p', ' = {\n'],
+  ['p', '  '], ['k', 'name'], ['p', ':   '], ['s', '"罗洋"'], ['p', ',\n'],
+  ['p', '  '], ['k', 'nick'], ['p', ':   '], ['s', '"爱分享的洋哥(早)"'], ['p', ',\n'],
+  ['p', '  '], ['k', 'school'], ['p', ': '], ['s', '"广东工业大学"'], ['p', ',\n'],
+  ['p', '  '], ['k', 'major'], ['p', ':  '], ['s', '"应用化学"'], ['p', ',\n'],
+  ['p', '  '], ['k', 'skill'], ['p', ':  '], ['s', '"自学编程"'], ['p', ',\n'],
+  ['p', '  '], ['k', 'job'], ['p', ':    '], ['s', '"RPA 电商运营自动化"'], ['p', ',\n'],
+  ['p', '  '], ['k', 'status'], ['p', ': ['], ['s', '"求职中"'], ['p', ', '], ['s', '"做点小生意"'], ['p', '],\n'],
+  ['p', '};\n\n'],
+  ['c', '// 能力嘎嘎涨 🌹🌹']
+];
+const TOTAL_CHARS = TOKENS.reduce((n, t) => n + Array.from(t[1]).length, 0);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function renderType(el, n) {
+  let out = '';
+  let left = n;
+  for (const [cls, txt] of TOKENS) {
+    if (left <= 0) break;
+    const chars = Array.from(txt);
+    out += `<span class="t-${cls}">${esc(chars.slice(0, left).join(''))}</span>`;
+    left -= chars.length;
+  }
+  el.innerHTML = out + '<span class="caret"></span>';
+}
+
+/* ---------- 花瓣 ---------- */
+const petals = document.getElementById('petals');
+for (let i = 0; i < 26; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.setProperty('--x', Math.random() * 100 + '%');
+  p.style.setProperty('--s', 14 + Math.random() * 18 + 'px');
+  p.style.setProperty('--t', 6 + Math.random() * 6 + 's');
+  p.style.setProperty('--d', Math.random() * 6 + 's');
+  p.style.setProperty('--dx', (Math.random() - 0.5) * 500 + 'px');
+  petals.appendChild(p);
+}
+
+/* =========================================================
+   BGM 合成器（Web Audio，110 BPM，Am - F - C - G）
+   ========================================================= */
+const PROG = [[57, 60, 64, 67], [53, 57, 60, 64], [48, 52, 55, 59], [55, 59, 62, 64]];
+const ROOT = [45, 41, 36, 43];
+const ARP = [0, 1, 2, 3, 2, 1, 3, 2];
+const MASTER = 0.85;
+const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+
+let actx, master, analyser, freqData, padBus, rev, dly, noiseBuf;
+let startTime = 0;
+let nextStep = 0;
+let started = false;
+let muted = false;
+
+function impulse(sec, decay) {
+  const len = actx.sampleRate * sec;
+  const b = actx.createBuffer(2, len, actx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const ch = b.getChannelData(c);
+    for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+  }
+  return b;
+}
+
+function initAudio() {
+  actx = new (window.AudioContext || window.webkitAudioContext)();
+  master = actx.createGain();
+  master.gain.value = MASTER;
+  const comp = actx.createDynamicsCompressor();
+  comp.threshold.value = -16;
+  comp.knee.value = 10;
+  comp.ratio.value = 3.5;
+  comp.attack.value = 0.005;
+  comp.release.value = 0.2;
+  analyser = actx.createAnalyser();
+  analyser.fftSize = 256;
+  analyser.smoothingTimeConstant = 0.78;
+  freqData = new Uint8Array(analyser.frequencyBinCount);
+  master.connect(comp);
+  comp.connect(analyser);
+  analyser.connect(actx.destination);
+
+  noiseBuf = actx.createBuffer(1, actx.sampleRate * 4, actx.sampleRate);
+  const nd = noiseBuf.getChannelData(0);
+  for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+
+  const conv = actx.createConvolver();
+  conv.buffer = impulse(2.6, 2.2);
+  rev = actx.createGain();
+  rev.gain.value = 0.32;
+  rev.connect(conv);
+  conv.connect(master);
+
+  const delay = actx.createDelay(2);
+  delay.delayTime.value = SPB * 0.75;
+  const fb = actx.createGain();
+  fb.gain.value = 0.32;
+  const lp = actx.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = 2800;
+  dly = actx.createGain();
+  dly.gain.value = 0.28;
+  dly.connect(delay);
+  delay.connect(lp);
+  lp.connect(fb);
+  fb.connect(delay);
+  lp.connect(master);
+
+  padBus = actx.createGain();
+  padBus.gain.value = 1;
+  padBus.connect(master);
+  padBus.connect(rev);
+}
+
+function env(g, t, a, peak, d) {
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t + a);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + a + d);
+}
+
+function noiseHit(t, dur, type, freq, q, v, dest, sweepTo) {
+  const s = actx.createBufferSource();
+  s.buffer = noiseBuf;
+  const f = actx.createBiquadFilter();
+  f.type = type;
+  f.frequency.setValueAtTime(freq, t);
+  if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur);
+  f.Q.value = q;
+  const g = actx.createGain();
+  env(g, t, 0.002, v, dur);
+  s.connect(f);
+  f.connect(g);
+  g.connect(dest || master);
+  s.start(t, Math.random() * 1.2);
+  s.stop(t + dur + 0.05);
+}
+
+function kick(t, v) {
+  const o = actx.createOscillator();
+  const g = actx.createGain();
+  o.frequency.setValueAtTime(150, t);
+  o.frequency.exponentialRampToValueAtTime(45, t + 0.13);
+  env(g, t, 0.004, v, 0.42);
+  o.connect(g);
+  g.connect(master);
+  o.start(t);
+  o.stop(t + 0.5);
+  noiseHit(t, 0.015, 'highpass', 3000, 0.7, v * 0.2);
+  padBus.gain.setValueAtTime(0.3, t);
+  padBus.gain.linearRampToValueAtTime(1, t + SPB * 0.85);
+}
+
+function hat(t, v, open) {
+  noiseHit(t, open ? 0.26 : 0.045, 'highpass', 8000, 0.8, v);
+}
+
+function clap(t, v) {
+  [0, 0.012, 0.024].forEach(d => noiseHit(t + d, 0.09, 'bandpass', 1400, 1, v * 0.6));
+  noiseHit(t + 0.03, 0.22, 'bandpass', 1200, 0.8, v * 0.4, rev);
+}
+
+function bass(t, m, dur, v) {
+  const f = actx.createBiquadFilter();
+  f.type = 'lowpass';
+  f.Q.value = 6;
+  f.frequency.setValueAtTime(180, t);
+  f.frequency.exponentialRampToValueAtTime(900, t + 0.02);
+  f.frequency.exponentialRampToValueAtTime(220, t + dur);
+  const g = actx.createGain();
+  env(g, t, 0.005, v, dur);
+  f.connect(g);
+  g.connect(master);
+  ['sawtooth', 'sine'].forEach(type => {
+    const o = actx.createOscillator();
+    o.type = type;
+    o.frequency.value = mtof(m);
+    o.connect(f);
+    o.start(t);
+    o.stop(t + dur + 0.05);
+  });
+}
+
+function pad(t, notes, dur, bright) {
+  const f = actx.createBiquadFilter();
+  f.type = 'lowpass';
+  f.frequency.value = bright;
+  f.Q.value = 0.7;
+  const g = actx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.11, t + 0.35);
+  g.gain.setValueAtTime(0.11, t + dur - 0.1);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.9);
+  f.connect(g);
+  g.connect(padBus);
+  notes.forEach(n => [-8, 8].forEach(dt => {
+    const o = actx.createOscillator();
+    o.type = 'sawtooth';
+    o.frequency.value = mtof(n);
+    o.detune.value = dt;
+    const vg = actx.createGain();
+    vg.gain.value = 0.18;
+    o.connect(vg);
+    vg.connect(f);
+    o.start(t);
+    o.stop(t + dur + 1);
+  }));
+}
+
+function pluck(t, m, v, type = 'triangle', dec = 0.3) {
+  const o = actx.createOscillator();
+  o.type = type;
+  o.frequency.value = mtof(m);
+  const f = actx.createBiquadFilter();
+  f.type = 'lowpass';
+  f.frequency.setValueAtTime(type === 'square' ? 3500 : 5000, t);
+  f.frequency.exponentialRampToValueAtTime(800, t + dec);
+  const g = actx.createGain();
+  env(g, t, 0.003, v, dec);
+  o.connect(f);
+  f.connect(g);
+  g.connect(master);
+  g.connect(dly);
+  o.start(t);
+  o.stop(t + dec + 0.05);
+}
+
+function blip(t, m) {
+  [0, 12].forEach((oc, i) => {
+    const o = actx.createOscillator();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(mtof(m + oc) * 1.02, t);
+    o.frequency.exponentialRampToValueAtTime(mtof(m + oc), t + 0.05);
+    const g = actx.createGain();
+    env(g, t, 0.004, i ? 0.035 : 0.08, 0.35);
+    o.connect(g);
+    g.connect(master);
+    g.connect(rev);
+    o.start(t);
+    o.stop(t + 0.45);
+  });
+}
+
+function whoosh(t) {
+  const s = actx.createBufferSource();
+  s.buffer = noiseBuf;
+  const f = actx.createBiquadFilter();
+  f.type = 'bandpass';
+  f.Q.value = 1.4;
+  f.frequency.setValueAtTime(400, t);
+  f.frequency.exponentialRampToValueAtTime(3500, t + SPB * 0.9);
+  const g = actx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.05, t + SPB * 0.4);
+  g.gain.linearRampToValueAtTime(0.0001, t + SPB * 1.1);
+  s.connect(f);
+  f.connect(g);
+  g.connect(rev);
+  g.connect(master);
+  s.start(t, Math.random());
+  s.stop(t + SPB * 1.2);
+}
+
+function riser(t, dur) {
+  const s = actx.createBufferSource();
+  s.buffer = noiseBuf;
+  const f = actx.createBiquadFilter();
+  f.type = 'bandpass';
+  f.Q.value = 2;
+  f.frequency.setValueAtTime(300, t);
+  f.frequency.exponentialRampToValueAtTime(7000, t + dur);
+  const g = actx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.2, t + dur * 0.97);
+  g.gain.linearRampToValueAtTime(0.0001, t + dur);
+  s.connect(f);
+  f.connect(g);
+  g.connect(master);
+  g.connect(rev);
+  s.start(t, Math.random() * 0.5);
+  s.stop(t + dur + 0.05);
+}
+
+function impact(t, v) {
+  const o = actx.createOscillator();
+  const g = actx.createGain();
+  o.frequency.setValueAtTime(80, t);
+  o.frequency.exponentialRampToValueAtTime(30, t + 1.2);
+  env(g, t, 0.005, v * 0.8, 1.2);
+  o.connect(g);
+  g.connect(master);
+  o.start(t);
+  o.stop(t + 1.3);
+  noiseHit(t, 1.6, 'lowpass', 7000, 0.5, v * 0.22, rev, 600);
+}
+
+function playStep(s, t) {
+  const beat = s / 4;
+  const pos = s % 16;
+  const gbar = Math.floor(s / 16);
+  const si = sceneIndex(beat);
+  const sc = SC[si];
+  const next = SC[si + 1];
+  const lstep = s - sc.start * 4;
+  const barsLeft = sc.bars - Math.floor(lstep / 16);
+  const E = sc.energy;
+  const ch = PROG[gbar % 4];
+  const root = ROOT[gbar % 4];
+  const isLast = si === SC.length - 1;
+
+  if (pos === 0) {
+    const bright = E >= 3 ? 2600 : E >= 2 ? 1800 : E >= 1 ? 1300 : 900;
+    pad(t, ch, isLast && barsLeft === 1 ? BARSEC * 3 : BARSEC, bright);
+  }
+  if (lstep === 0 && si > 0) impact(t, E >= 3 ? 1 : 0.4);
+
+  if (E >= 1 && pos % 4 === 0) kick(t, E >= 3 ? 1 : 0.85);
+  if (E >= 2 && (pos === 4 || pos === 12)) clap(t, E >= 3 ? 0.55 : 0.4);
+  if (E >= 1 && pos % 4 === 2) hat(t, E >= 3 ? 0.12 : 0.1, E >= 3);
+  if (E >= 2 && pos % 2 === 1) hat(t, 0.045);
+  if (E >= 1) {
+    const hit = E >= 2 ? pos % 2 === 0 : pos % 4 === 2;
+    if (hit) bass(t, E >= 3 && pos % 4 === 2 ? root + 12 : root, SPB * 0.42, 0.3);
+  }
+
+  const type = sc.mood === 'chip' ? 'square' : 'triangle';
+  const note = ch[ARP[pos % 8]] + 12;
+  if (sc.mood === 'calm') {
+    if (pos % 4 === 0) pluck(t, ch[(pos / 4) % 4] + 12, 0.1, 'sine', 1.4);
+  } else if (E === 0) {
+    if (pos % 2 === 0) pluck(t, note, 0.06, type, 0.35);
+  } else if (E === 1) {
+    if (pos % 2 === 0) pluck(t, note, type === 'square' ? 0.035 : 0.06, type);
+  } else {
+    pluck(t, note + (pos % 8 === 7 ? 12 : 0), type === 'square' ? 0.03 : 0.05, type, 0.22);
+  }
+
+  if (next && barsLeft === 1) {
+    if (pos === 0 && next.energy > E) riser(t, BARSEC);
+    if (next.energy >= 3) {
+      if (pos >= 8) clap(t, 0.12 + ((pos - 8) / 8) * 0.4);
+      else if (pos % 2 === 0) clap(t, 0.1);
+    }
+  }
+
+  if (sc.whoosh.has(lstep)) whoosh(t);
+  if (sc.blips.has(lstep)) blip(t, ch[(lstep >> 2) % 4] + 24);
+}
+
+
+
+function scheduler() {
+  if (!actx || actx.state !== 'running') return;
+  while (nextStep < TOTAL * 4 && startTime + nextStep * SPB / 4 < actx.currentTime + 0.12) {
+    playStep(nextStep, startTime + nextStep * SPB / 4);
+    nextStep++;
+  }
+}
+
+/* =========================================================
+   演出主循环
+   —— 原文件在 scheduler() 中途被截断；以下按同款 data-* 约定重建
+   ========================================================= */
+const fmtInt = n => Math.round(n).toLocaleString('en-US');
+const mmss = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+const ease = outCubic;
+
+const elStart = document.getElementById('start');
+const elUI = document.getElementById('ui');
+const elPlay = document.getElementById('play');
+const elBar = document.getElementById('bar');
+const elFill = document.getElementById('fill');
+const elTicks = document.getElementById('ticks');
+const elTime = document.getElementById('time');
+const elHint = document.getElementById('hint');
+const elFlash = document.getElementById('flash');
+const elSceneMark = document.getElementById('sceneMark');
+const elBeats = document.getElementById('beats');
+const elTc = document.getElementById('tc');
+const elCode = document.querySelector('.code');
+
+SC.forEach((s, i) => {
+  s.el.style.opacity = 0;
+  s.el.style.visibility = 'hidden';
+  s.items.forEach(it => { it.e.style.opacity = 0; });
+  const t = document.createElement('i');
+  t.style.cssText = `position:absolute;top:-4px;left:${(s.start / TOTAL * 100).toFixed(2)}%;width:2px;height:14px;border-radius:2px;background:rgba(255,255,255,.28);pointer-events:none`;
+  elTicks.appendChild(t);
+});
+
+let playT = 0, playing = false, lastNow = 0, kvSmooth = 0, flashV = 0, cueScene = -1, lastBeatLit = null;
+
+/* 复位所有演出型 fx 的输出（重播 / 回跳时用） */
+function resetShow() {
+  SC.forEach(s => {
+    s.items.forEach(it => { it.e.style.transform = ''; it.e.style.opacity = 0; });
+    s.fx.forEach(f => {
+      f.last = -1;
+      if (f.type === 'count') f.e.textContent = '0';
+      else if (f.type === 'prog') f.e.style.setProperty('--p', 0);
+      else if (f.type === 'dash') f.e.setAttribute('stroke-dasharray', '');
+      else if (f.type === 'chase') f.tiles.forEach(t => t.style.setProperty('--lit', 0));
+    });
+  });
+  elCode.innerHTML = '';
+  cueScene = -1;
+}
+
+function render(t, kv) {
+  const beat = Math.min(t, TOTAL - 1e-4);
+  const si = sceneIndex(beat);
+  const sc = SC[si];
+  const lb = beat - sc.start;
+
+  for (let i = 0; i < SC.length; i++) {
+    const on = i === si, e = SC[i].el;
+    e.style.opacity = on ? '1' : '0';
+    e.style.visibility = on ? 'visible' : 'hidden';
+  }
+
+  const { c } = cameraAt(sc, lb, kv);
+  sc.world.style.transform = `translate(${c.x.toFixed(2)}px,${c.y.toFixed(2)}px) scale(${c.k.toFixed(4)})`;
+  stage.style.setProperty('--k', c.k.toFixed(3));
+
+  for (const it of sc.items) {
+    const e = it.e;
+    if (it.r === 'none') { e.style.opacity = 1; e.style.transform = ''; continue; }
+    const p = clamp((lb - it.at) / it.len);
+    if (p <= 0) { e.style.opacity = 0; e.style.transform = ''; continue; }
+    const q = ease(p);
+    e.style.opacity = (1 - Math.pow(1 - p, 2)).toFixed(3);
+    if (p >= 1) { e.style.transform = ''; continue; }
+    let tf;
+    switch (it.r) {
+      case 'l': tf = `translateX(${((1 - q) * -220).toFixed(1)}px)`; break;
+      case 'drop': tf = `translateY(${((1 - q) * -260).toFixed(1)}px)`; break;
+      case 'fly': tf = `translate(${(it.dx * (1 - q)).toFixed(1)}px,${(it.dy * (1 - q)).toFixed(1)}px) rotate(${(it.rot * (1 - q)).toFixed(2)}deg)`; break;
+      case 's': tf = `translateY(${((1 - q) * 36).toFixed(1)}px) scale(${(0.82 + 0.18 * q).toFixed(3)})`; break;
+      default: tf = `translateY(${((1 - q) * 70).toFixed(1)}px)`; break;
+    }
+    e.style.transform = tf;
+  }
+
+  for (const f of sc.fx) {
+    const p = clamp((lb - f.at) / (f.len || 1.5));
+    if (p <= 0) continue;
+    const q = ease(p);
+    switch (f.type) {
+      case 'type': {
+        const n = Math.round(q * TOTAL_CHARS);
+        if (f.last !== n) { renderType(elCode, n); f.last = n; }
+        break;
+      }
+      case 'sprite': drawMainSprite(lb, kv); break;
+      case 'count': f.e.textContent = fmtInt(f.to * q); break;
+      case 'prog': f.e.style.setProperty('--p', q.toFixed(4)); break;
+      case 'dash': f.e.setAttribute('stroke-dasharray', `${(f.to * q).toFixed(1)} 691`); break;
+      case 'chase': {
+        const k = Math.floor(lb - f.at);
+        f.tiles.forEach((t, i) => t.style.setProperty('--lit', i <= k ? (i === k ? '1' : '0.3') : '0'));
+        break;
+      }
+    }
+  }
+
+  elSceneMark.textContent = `${String(si + 1).padStart(2, '0')} / ${String(SC.length).padStart(2, '0')}`;
+  const sec = beat * SPB;
+  elTc.textContent = '00:' + mmss(sec);
+  const lit = (beat % 1) < 0.18;
+  if (lit !== lastBeatLit) {
+    elBeats.innerHTML = `<span class="${lit ? 'on' : ''}">♩</span> 110 BPM`;
+    lastBeatLit = lit;
+  }
+  elFill.style.width = (clamp(beat / TOTAL) * 100).toFixed(2) + '%';
+  elTime.textContent = `${mmss(sec)} / ${mmss(TOTAL * SPB)}`;
+}
+
+function loop(now) {
+  const dt = Math.min(50, now - lastNow) / 1000;
+  lastNow = now;
+  if (playing) {
+    if (actx && actx.state === 'running') playT = (actx.currentTime - startTime) / SPB;
+    else playT += dt / SPB;
+    if (playT >= TOTAL) { playT = TOTAL; setPlaying(false); }
+  }
+  if (actx && analyser) {
+    analyser.getByteFrequencyData(freqData);
+    let s = 0;
+    for (let i = 0; i < 8; i++) s += freqData[i];
+    kvSmooth += (s / 8 / 255 - kvSmooth) * 0.25;
+  }
+  render(playT, kvSmooth);
+  if (started) scheduler();
+  const si = sceneIndex(Math.min(playT, TOTAL - 1e-4));
+  if (si !== cueScene) { if (cueScene >= 0) flashV = 0.6; cueScene = si; }
+  if (flashV > 0.004) { flashV *= 0.86; elFlash.style.opacity = flashV.toFixed(3); }
+  else if (elFlash.style.opacity !== '0') elFlash.style.opacity = '0';
+  requestAnimationFrame(loop);
+}
+
+function setPlaying(on) {
+  playing = on;
+  elPlay.textContent = on ? '❚❚' : '▶';
+  if (!started) return;
+  if (on) { actx.resume(); stage.classList.remove('paused'); }
+  else { actx.suspend(); stage.classList.add('paused'); }
+}
+
+function seek(beat) {
+  playT = Math.max(0, Math.min(TOTAL - 0.02, beat));
+  if (started) {
+    try { actx.close(); } catch (e) { }
+    initAudio();
+    if (muted) master.gain.value = 0;
+    actx.resume();
+    startTime = actx.currentTime + 0.1;
+    nextStep = Math.ceil(playT * 4);
+    playing = true;
+  }
+  resetShow();
+  render(playT, 0);
+  elPlay.textContent = playing ? '❚❚' : '▶';
+}
+
+function begin() {
+  if (!started) {
+    initAudio();
+    started = true;
+    startTime = actx.currentTime + 0.12;
+    nextStep = 0;
+    playT = 0;
+    elStart.classList.add('hide');
+    elUI.classList.add('show');
+    setTimeout(() => elHint.classList.add('show'), 1200);
+  }
+  actx.resume();
+  setPlaying(true);
+}
+
+function toggleMute() {
+  muted = !muted;
+  if (master) master.gain.value = muted ? 0 : MASTER;
+}
+
+elStart.addEventListener('click', begin);
+elPlay.addEventListener('click', () => setPlaying(!playing));
+elBar.addEventListener('click', ev => {
+  const r = elBar.getBoundingClientRect();
+  seek(clamp((ev.clientX - r.left) / r.width) * TOTAL);
+});
+document.addEventListener('keydown', ev => {
+  const si = sceneIndex(playT);
+  if (ev.code === 'Space') { ev.preventDefault(); started ? setPlaying(!playing) : begin(); }
+  else if (ev.code === 'ArrowRight') seek(si + 1 < SC.length ? SC[si + 1].start : TOTAL - 0.02);
+  else if (ev.code === 'ArrowLeft') seek(playT - SC[si].start > 0.6 ? SC[si].start : (si > 0 ? SC[si - 1].start : 0));
+  else if (ev.key === 'r' || ev.key === 'R') { seek(0); }
+  else if (ev.key === 'm' || ev.key === 'M') toggleMute();
+  else if (ev.key === 'f' || ev.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+elPlay.textContent = '▶';
+resetShow();
+lastNow = performance.now();
+render(0, 0);
+requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>
