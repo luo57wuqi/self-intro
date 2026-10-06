@@ -297,14 +297,13 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(-
 
 /* ========== 10 结尾 ========== */
 .s-end{justify-content:center;align-items:center;text-align:center}
-.end-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-.end-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,rgba(7,6,11,.25) 0%,rgba(7,6,11,.72) 100%)}
+.end-easter{position:absolute;right:80px;bottom:120px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:14px}
+.end-easter .cap-line{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:.06em;color:var(--gold);text-shadow:0 2px 16px rgba(0,0,0,.7)}
+.end-easter .cap-sub{font-size:18px;font-weight:300;letter-spacing:.12em;color:#e9e3f0;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.end-easter video{width:420px;border-radius:18px;border:2px solid rgba(245,201,123,.4);box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 30px rgba(245,201,123,.15);display:block}
 .end-title{font-family:var(--serif);font-size:210px;font-weight:900;margin:0;letter-spacing:.18em;line-height:1.1;position:relative;z-index:2}
 .end-title span{display:inline-block}
 .end-sub{font-size:56px;font-weight:300;letter-spacing:.3em;margin-top:30px;position:relative;z-index:2}
-.end-caption{position:relative;z-index:2;margin-top:44px}
-.end-caption .cap-line{font-family:var(--serif);font-size:44px;font-weight:700;letter-spacing:.06em;color:var(--gold);text-shadow:0 2px 24px rgba(0,0,0,.6)}
-.end-caption .cap-sub{font-size:26px;font-weight:300;letter-spacing:.14em;color:#e9e3f0;margin-top:14px;text-shadow:0 2px 16px rgba(0,0,0,.6)}
 .sign{margin-top:80px;display:inline-flex;align-items:center;gap:30px;padding:26px 44px;position:relative;z-index:2}
 .sign .av{width:86px;height:86px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:40px;font-weight:900;background:linear-gradient(135deg,var(--rose),var(--gold));color:#1a0d12}
 .sign .txt{text-align:left}
@@ -632,16 +631,15 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(-
   <!-- 10 结尾 -->
   <section class="scene" id="end" data-bars="4" data-energy="0" data-mood="calm" data-name="结尾">
     <div class="world s-end">
-      <video class="end-video" src="demo_char_cd_train.mp4" autoplay muted loop playsinline></video>
-      <div class="end-overlay"></div>
       <div id="petals"></div>
       <h1 class="end-title">
         <span class="it gold-text" data-r="s" data-at="0.01">江</span><span class="it gold-text" data-r="s" data-at="1">湖</span><span class="it gold-text" data-r="s" data-at="2">漫</span><span class="it gold-text" data-r="s" data-at="3">漫</span>
       </h1>
       <div class="end-sub it" data-at="5" data-len="2">期待见证彼此成长</div>
-      <div class="end-caption it" data-at="6" data-len="3">
+      <div class="end-easter it" data-at="6" data-len="3">
         <div class="cap-line">🎵 我的新方向 · HeartAI 辅助</div>
         <div class="cap-sub">获得希望最快的方式之一，是一首旋律</div>
+        <video src="demo_char_cd_train.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="sign card it" data-at="8">
         <div class="av">洋</div>
