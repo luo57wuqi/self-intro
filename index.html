@@ -297,10 +297,14 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(-
 
 /* ========== 10 结尾 ========== */
 .s-end{justify-content:center;align-items:center;text-align:center}
-.end-easter{position:absolute;right:80px;bottom:120px;z-index:10;display:flex;flex-direction:column;align-items:center;gap:14px}
-.end-easter .cap-line{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:.06em;color:var(--gold);text-shadow:0 2px 16px rgba(0,0,0,.7)}
-.end-easter .cap-sub{font-size:18px;font-weight:300;letter-spacing:.12em;color:#e9e3f0;text-shadow:0 2px 12px rgba(0,0,0,.7)}
-.end-easter video{width:420px;border-radius:18px;border:2px solid rgba(245,201,123,.4);box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 30px rgba(245,201,123,.15);display:block}
+.end-easter{position:absolute;right:80px;bottom:120px;z-index:10}
+.easter-stage{position:relative;width:420px;border-radius:18px;overflow:hidden;border:2px solid rgba(245,201,123,.4);box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 30px rgba(245,201,123,.15);background:#000}
+.easter-black{position:absolute;inset:0;z-index:2;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity 1.2s ease}
+.easter-black.hide{opacity:0;pointer-events:none}
+.easter-type{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--gold);text-align:center;line-height:1.8;padding:20px;white-space:pre-wrap}
+.easter-type .cursor{display:inline-block;width:2px;height:24px;background:var(--gold);vertical-align:-4px;animation:blink 1s steps(2) infinite;margin-left:2px}
+.easter-stage video{width:100%;display:block;opacity:0;transition:opacity 1.5s ease}
+.easter-stage video.show{opacity:1}
 .end-title{font-family:var(--serif);font-size:210px;font-weight:900;margin:0;letter-spacing:.18em;line-height:1.1;position:relative;z-index:2}
 .end-title span{display:inline-block}
 .end-sub{font-size:56px;font-weight:300;letter-spacing:.3em;margin-top:30px;position:relative;z-index:2}
@@ -453,7 +457,7 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(-
           <h4>— 我的做法</h4>
           <ol>
             <li class="it" data-r="l" data-at="13">看泽央 B 站的启动包分享，先站在前人肩膀上</li>
-            <li class="it" data-r="l" data-at="14.5">给 uu 做 30s / 120s 的视频：用<b>电影调度</b>的方式落到文字</li>
+            <li class="it" data-r="l" data-at="14.5">看同行/伙伴于的视频号，自己写<b>电影调度</b>词</li>
           </ol>
           <div class="chips it" data-at="15.5">
             <span class="tag">🖼 画面里有什么</span><span class="tag">🎥 如何运镜</span><span class="tag">🌿 前景</span><span class="tag">🔀 转场取材</span>
@@ -636,10 +640,13 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(-
         <span class="it gold-text" data-r="s" data-at="0.01">江</span><span class="it gold-text" data-r="s" data-at="1">湖</span><span class="it gold-text" data-r="s" data-at="2">漫</span><span class="it gold-text" data-r="s" data-at="3">漫</span>
       </h1>
       <div class="end-sub it" data-at="5" data-len="2">期待见证彼此成长</div>
-      <div class="end-easter it" data-at="6" data-len="3">
-        <div class="cap-line">🎵 我的新方向 · HeartAI 辅助</div>
-        <div class="cap-sub">获得希望最快的方式之一，是一首旋律</div>
-        <video src="demo_char_cd_train.mp4" autoplay loop playsinline></video>
+      <div class="end-easter" id="easter">
+        <div class="easter-stage" id="easterStage">
+          <div class="easter-black" id="easterBlack">
+            <div class="easter-type" id="easterType"></div>
+          </div>
+          <video id="easterVideo" src="demo_char_cd_train.mp4" loop playsinline></video>
+        </div>
       </div>
       <div class="sign card it" data-at="8">
         <div class="av">洋</div>
@@ -1275,6 +1282,7 @@ function resetShow() {
   });
   elCode.innerHTML = '';
   cueScene = -1;
+  resetEaster();
 }
 
 function render(t, kv) {
@@ -1346,6 +1354,52 @@ function render(t, kv) {
   elTime.textContent = `${mmss(sec)} / ${mmss(TOTAL * SPB)}`;
 }
 
+/* ========== 彩蛋：打字机 + 视频淡入 ========== */
+const easterVideo = document.getElementById('easterVideo');
+const easterBlack = document.getElementById('easterBlack');
+const easterType = document.getElementById('easterType');
+const EASTER_TEXT = '🎵 我的新方向 · HeartAI 辅助\n获得希望最快的方式之一\n是一首旋律';
+let easterStarted = false;
+let easterCharIdx = 0;
+let easterTimer = null;
+
+function startEaster() {
+  if (easterStarted) return;
+  easterStarted = true;
+  easterCharIdx = 0;
+  easterType.innerHTML = '<span class="cursor"></span>';
+  easterTimer = setInterval(() => {
+    if (easterCharIdx < EASTER_TEXT.length) {
+      const ch = EASTER_TEXT[easterCharIdx];
+      easterCharIdx++;
+      const cursor = easterType.querySelector('.cursor');
+      if (cursor) cursor.remove();
+      easterType.innerHTML = esc(EASTER_TEXT.slice(0, easterCharIdx)).replace(/\n/g, '<br>') + '<span class="cursor"></span>';
+    } else {
+      clearInterval(easterTimer);
+      easterTimer = null;
+      const cursor = easterType.querySelector('.cursor');
+      if (cursor) cursor.remove();
+      setTimeout(() => {
+        easterBlack.classList.add('hide');
+        easterVideo.classList.add('show');
+        easterVideo.play().catch(() => {});
+      }, 800);
+    }
+  }, 120);
+}
+
+function resetEaster() {
+  easterStarted = false;
+  easterCharIdx = 0;
+  if (easterTimer) { clearInterval(easterTimer); easterTimer = null; }
+  easterBlack.classList.remove('hide');
+  easterVideo.classList.remove('show');
+  easterVideo.pause();
+  easterVideo.currentTime = 0;
+  easterType.innerHTML = '';
+}
+
 function loop(now) {
   const dt = Math.min(50, now - lastNow) / 1000;
   lastNow = now;
@@ -1364,6 +1418,7 @@ function loop(now) {
   if (started) scheduler();
   const si = sceneIndex(Math.min(playT, TOTAL - 1e-4));
   if (si !== cueScene) { if (cueScene >= 0) flashV = 0.6; cueScene = si; }
+  if (si === SC.length - 1 && playing) startEaster();
   if (flashV > 0.004) { flashV *= 0.86; elFlash.style.opacity = flashV.toFixed(3); }
   else if (elFlash.style.opacity !== '0') elFlash.style.opacity = '0';
   requestAnimationFrame(loop);
